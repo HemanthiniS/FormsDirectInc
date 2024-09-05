@@ -127,7 +127,7 @@ processResources {
         }
     }
 }
-
+println("starting of the bootwar ")
 bootWar {
     if (project.hasProperty('site')) {
         println "hola 0"
@@ -145,6 +145,7 @@ bootWar {
             println "hola 2"
             if (propFile.canRead()) {
                 appProps.load(new FileInputStream(propFile))
+                println("inside canRead()")
                 if (appProps != null && project.hasProperty('mode') && appProps.containsKey(site.toLowerCase() + "." + mode)) {
                     println "assetsPath: " + appProps[site.toLowerCase() + "." + mode]
                     println ("site" + site)
