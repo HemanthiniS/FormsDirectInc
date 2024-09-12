@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</property>
+        <property name="hibernate.cache.region_prefix">hibernate.test</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.generator.class">org.hibernate.id.IdentityGenerator</property>
+        <property name="hibernate.jdbc.batch_versioned_data">true</property>
+        <property name="hibernate.jdbc.use_streams_for_binary">true</property>
+        <property name="hibernate.max_fetch_depth">1</property>
+        <property name="hibernate.query.substitutions">yes 'Y', no 'N'</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <mapping resource="com/formsdirectinc/dao/PaymentT.hbm.xml"/>
+        <mapping resource="com/formsdirectinc/dao/Card.hbm.xml"/>
+        <mapping resource="com/formsdirectinc/dao/CommentsTable.hbm.xml"/>
+        <mapping resource="com.formsdirectinc.dao/Product.hbm.xml"/>
+        <mapping resource="com.formsdirectinc.dao/CustomerSignup.hbm.xml"/>
+        <mapping resource="com.formsdirectinc.dao/Leads.hbm.xml"/>
+        <mapping resource="com/formsdirectinc/dao/ApplicationTable.hbm.xml"/>
+        <mapping resource="com/formsdirectinc/dao/ApplicationMetaData.hbm.xml"/>
+        <mapping resource="com/formsdirectinc/dao/StageMetaData.hbm.xml"/>
+        <mapping resource="com/formsdirectinc/dao/Stage.hbm.xml"/>
+        <mapping resource="com/formsdirectinc/dao/EFiledApplication.hbm.xml"/>
+        <mapping resource="com/formsdirectinc/dao/AppCenterApplicationTable.hbm.xml"/>
+        <mapping resource="com/formsdirectinc/dao/AppCenterStage.hbm.xml" />
+        <mapping resource="com/formsdirectinc/dao/UsCitiesT.hbm.xml" />
+        <mapping resource="com/formsdirectinc/dao/UserVisitSource.hbm.xml"/>
+        <mapping resource="com/formsdirectinc/dao/BrowserData.hbm.xml" />
+        <mapping resource="com.formsdirectinc.dao/EQDataTable.hbm.xml" />
+        <mapping resource="com.formsdirectinc.dao/CustomerConsent.hbm.xml"/>
+        <mapping resource="com.formsdirectinc.dao/ConsentHistory.hbm.xml" />
+
+    </session-factory>
+</hibernate-configuration>

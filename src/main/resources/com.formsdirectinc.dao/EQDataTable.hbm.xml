@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <typedef name="encryptedString" class="com.formsdirectinc.security.type.RoutingEncryptedStringType">
+        <param name="registeredName">hibernate-encryptor</param>
+    </typedef>
+    <class name="com.formsdirectinc.dao.EQDataTable" table="eq_data_t" dynamic-update="true"
+           dynamic-insert="true" select-before-update="false">
+
+        <id name="id" type="long">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+
+        <property name="userId" type="java.lang.Long">
+            <column name="user_id"/>
+        </property>
+        <property name="sessionId" type="string">
+            <column name="session_id" length="200"/>
+        </property>
+        <property name="product" type="string">
+            <column name="product" length="200"/>
+        </property>
+        <property name="reasonCode" type="string">
+            <column name="reason_code" length="200"/>
+        </property>
+
+        <property name="data" type="encryptedString">
+            <column name="data" length="16277215" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

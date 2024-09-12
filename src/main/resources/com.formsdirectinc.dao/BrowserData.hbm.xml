@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 13, 2006 4:55:37 PM by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+	<class name="com.formsdirectinc.dao.BrowserData" table="browser_data_t"
+		dynamic-insert="true" dynamic-update="true" select-before-update="false">
+
+		<id name="id" type="long">
+			<column name="id" />
+			<generator class="native" />
+		</id>
+
+		<property name="customerId" type="java.lang.Long">
+			<column name="user_id" length="20" />
+		</property>
+
+		<property name="customerIpAddress" type="string">
+			<column name="ip_address" length="20">
+				<comment></comment>
+			</column>
+		</property>
+
+		<property name="customerCityName" type="string">
+			<column name="geoip_city" length="255">
+				<comment></comment>
+			</column>
+		</property>
+
+		<property name="customerStateName" type="string">
+			<column name="geoip_state" length="255">
+				<comment></comment>
+			</column>
+		</property>
+
+		<property name="customerCountryName" type="string">
+			<column name="geoip_country" length="255">
+				<comment></comment>
+			</column>
+		</property>
+
+		<property name="userAgent" type="text">
+			<column name="user_agent_header">
+				<comment></comment>
+			</column>
+		</property>
+
+		<property name="httpReferer" type="text">
+			<column name="referer_header">
+				<comment></comment>
+			</column>
+		</property>
+
+		<property name="browserLanguage" type="string">
+			<column name="browser_language" length="255">
+				<comment></comment>
+			</column>
+		</property>
+
+	</class>
+
+</hibernate-mapping>

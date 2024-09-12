@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <typedef name="encryptedString" class="com.formsdirectinc.security.type.RoutingEncryptedStringType">
+        <param name="registeredName">hibernate-encryptor</param>
+    </typedef>
+    <class name="com.formsdirectinc.dao.ApplicationTable" table="ApplicationTable" dynamic-update="true"
+           dynamic-insert="true" select-before-update="false">
+
+        <id name="applicationId" type="long">
+            <column name="applicationID"/>
+            <generator class="native">
+            </generator>
+        </id>
+
+        <version name="version" type="java.lang.Integer">
+            <column name="version"/>
+        </version>
+
+        <property name="parentApplicationId" type="java.lang.Long">
+            <column name="parentApplicationID"/>
+        </property>
+
+        <one-to-one name="applicationMetaData" class="com.formsdirectinc.dao.ApplicationMetaData"/>
+
+        <property name="userId" type="long">
+            <column name="userID" not-null="true"/>
+        </property>
+
+        <property name="applicationType" type="int">
+            <column name="applicationType" not-null="true"/>
+        </property>
+
+        <property name="applicantName" type="string">
+            <column name="applicantName" length="200"/>
+        </property>
+
+        <property name="paymentMode" type="int">
+            <column name="paymentMode" not-null="true"/>
+        </property>
+
+        <property name="location" type="string">
+            <column name="location" length="200"/>
+        </property>
+
+        <property name="status" type="int">
+            <column name="status" not-null="true"/>
+        </property>
+
+        <property name="mailDate" type="timestamp">
+            <column name="mailDate" sql-type="datetime" />
+        </property>
+
+        <property name="entryThrough" type="string">
+            <column name="entryThrough" length="200"/>
+        </property>
+
+        <property name="otherEligibleProducts" type="string">
+            <column name="otherEligibleProducts" length="200"/>
+        </property>
+
+        <property name="dateBegun" type="timestamp">
+            <column name="dateBegun" sql-type="datetime"/>
+        </property>
+
+        <property name="accessCount" type="int">
+            <column name="accessCount" not-null="true"/>
+        </property>
+
+        <property name="archived" type="java.lang.Boolean">
+            <column name="application_archived" sql-type="tinyint"/>
+        </property>
+
+        <property name="locked" type="java.lang.Boolean">
+            <column name="locked" sql-type="tinyint"/>
+        </property>
+
+        <property name="pendingMigration" type="java.lang.Boolean">
+            <column name="pending_migration" sql-type="tinyint"/>
+        </property>
+
+        <property name="lastUpdate" type="timestamp" insert="false" update="false">
+            <column name="lastUpdate" length="19"/>
+        </property>
+
+        <property name="lastPrinted" type="timestamp">
+            <column name="lastPrinted" length="19"/>
+        </property>
+
+        <property name="applicationData" type="encryptedString">
+            <column name="applicationData" length="16277215" not-null="true"/>
+        </property>
+
+        <property name="interactionData" type="string">
+            <column name="interactionData" length="16277215" not-null="true"/>
+        </property>
+
+        <property name="flowPath" type="string">
+            <column name="flowPath" length="200"/>
+        </property>
+
+        <property name="site" type="string">
+            <column name="site" length="200"/>
+        </property>
+
+        <property name="packageName" type="string">
+            <column name="packageName" length="200"/>
+        </property>
+
+        <property name="currentStageId" type="string">
+            <column name="currentStageID" length="100"/>
+        </property>
+
+        <property name="paymentStatus" type="int">
+            <column name="paymentStatus" not-null="true"/>
+        </property>
+
+        <property name="entryStageId" type="string">
+            <column name="entryStageID" length="100"/>
+        </property>
+
+        <set name="stages" cascade="delete" lazy="true" inverse="false" order-by="stageID asc">
+            <key>
+                <column name="applicationId" not-null="true"/>
+            </key>
+            <one-to-many class="com.formsdirectinc.dao.Stage"/>
+        </set>
+
+        <set name="childApplications" lazy="true" inverse="false">
+            <key>
+                <column name="parentApplicationID"/>
+            </key>
+            <one-to-many class="com.formsdirectinc.dao.ApplicationTable"/>
+        </set>
+
+        <one-to-one name="efiledApplication" class="com.formsdirectinc.dao.EFiledApplication"
+                    property-ref="applicationId">
+            <formula>applicationID</formula>
+        </one-to-one>
+    </class>
+
+    <query name="com.formsdirectinc.dao.ApplicationTable.findByEmailId"><![CDATA[
+      from ApplicationTable as appTable, CustomerSignup as cs where
+      appTable.userId = cs.id and cs.emailId = :emailId ]]>
+        <query-param name="emailId" type="java.lang.String"/>
+    </query>
+
+    <query name="com.formsdirectinc.dao.ApplicationTable.findByEmailIdAppIdAppType"><![CDATA[
+      from ApplicationTable as appTable, CustomerSignup as cs where
+      appTable.userId = cs.id and cs.emailId = :emailId and
+      appTable.applicationType = :appType and appTable.applicationId =
+      :appId]]>
+        <query-param name="emailId" type="java.lang.String"/>
+        <query-param name="appType" type="java.lang.Integer"/>
+        <query-param name="appId" type="long"/>
+    </query>
+
+    <query name="com.formsdirectinc.dao.ApplicationTable.findByEmailIdAppIdAppTypePackage"><![CDATA[
+      from ApplicationTable as appTable, CustomerSignup as cs where
+      appTable.userId = cs.id and cs.emailId = :emailId and
+      appTable.applicationType = :appType and appTable.applicationId =
+      :appId and appTable.packageName = :packageName]]>
+        <query-param name="emailId" type="java.lang.String"/>
+        <query-param name="appType" type="java.lang.Integer"/>
+        <query-param name="appId" type="long"/>
+        <query-param name="packageName" type="java.lang.String"/>
+    </query>
+</hibernate-mapping>

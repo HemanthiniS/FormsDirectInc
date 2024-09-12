@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-Jun-08 11:35:40 PM by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+    <class name="com.formsdirectinc.dao.Product" table="product_t">
+        <comment></comment>
+        <id name="productId" type="java.lang.Long">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="200" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="200" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="productType" column="product_type" >
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">com.formsdirectinc.services.account.ProductTypeEnum</param>
+                <param name="useNamed">true</param>
+            </type>
+        </property>
+        <property name="price" type="java.math.BigDecimal">
+            <column name="price" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="active" type="java.lang.Boolean">
+            <column name="active" length="2" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="trialEnabled" type="java.lang.Boolean">
+            <column name="trial_enabled" length="2" not-null="true">
+                <comment></comment>
+            </column>
+        </property>
+    </class>
+    <query
+      name="com.formsdirectinc.dao.Product.findByProductId"><![CDATA[
+      from Product as product where product.id = :prodId ]]>
+      <query-param name="prodId" type="java.lang.Long"/>
+    </query>
+</hibernate-mapping>

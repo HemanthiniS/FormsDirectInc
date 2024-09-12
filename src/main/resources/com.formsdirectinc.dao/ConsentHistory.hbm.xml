@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.formsdirectinc.dao.ConsentHistory" table="consent_history_t">
+        <id name="id" type="java.lang.Long">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+
+        <version name="version" type="java.lang.Long" column="version"/>
+
+        <many-to-one name="consent" class="com.formsdirectinc.dao.CustomerConsent" fetch="select">
+            <column name="consent_id" not-null="true" />
+        </many-to-one>
+
+        <property name="status" type="java.lang.String" not-null="true"/>
+
+        <property name="source" column="source" type="java.lang.String" length="200"  not-null="true"/>
+
+        <property name="date" type="timestamp" insert="true" update="true">
+            <column name="date" length="19"/>
+        </property>
+
+        <property name="rowCreatedAt" column="row_created_at" update="false" insert="false" generated="insert"/>
+
+        <property name="rowUpdatedAt" column="row_updated_at" update="false" insert="false" generated="insert"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 13, 2006 4:55:37 PM by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+    <class name="com.formsdirectinc.dao.Leads" table="leads_t">
+        <comment></comment>
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="customerId" type="java.lang.Long">
+            <column name="customer_id" >
+                <comment></comment>
+            </column>
+        </property>
+        <property name="contactId" type="string">
+            <column name="contact_id" length="20" >
+                <comment></comment>
+            </column>
+        </property>
+        <property name="orderId" type="java.lang.Long">
+            <column name="order_id" >
+                <comment></comment>
+            </column>
+        </property>
+        <property name="dealName" type="string">
+            <column name="deal_name" length="100">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="dealSource" type="string">
+            <column name="deal_source" length="30">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="dealStatus" type="java.lang.Boolean">
+            <column name="deal_status" length="2" default="0">
+                <comment></comment>
+            </column>
+        </property>
+    </class>
+    <query
+      name="com.formsdirectinc.dao.Leads.findLeadsByCustomerId"><![CDATA[
+      from Leads as lead where lead.customerId = :customerId ]]>
+      <query-param name="customerId" type="java.lang.Long"/>
+    </query>
+
+</hibernate-mapping>

@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 13, 2006 4:55:37 PM by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+    <class name="com.formsdirectinc.dao.CustomerSignup" table="CustomerSignup">
+        <comment></comment>
+        <id name="id" type="long">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <version name="version" type="java.lang.Integer">
+            <column name="version">
+                <comment></comment>
+            </column>
+        </version>
+        <property name="emailId" type="string">
+            <column name="emailID" length="200" unique="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="authId" type="string">
+            <column name="auth_id" length="100" unique="true">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="firstName" type="string">
+            <column name="firstName" length="100">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="lastName" type="string">
+            <column name="lastName" length="100">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="middleName" type="string">
+            <column name="middleName" length="50">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="telephoneCountryCode" type="string">
+          <column name="telephoneCountryCode" length="10">
+            <comment/>
+          </column>
+        </property>
+	<property name="telephoneCountryName" type="string">
+          <column name="telephoneCountryName" length="255">
+            <comment/>
+          </column>
+        </property>
+        <property name="telephone" type="string">
+            <column name="telephone" length="50">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="birthCountry" type="string">
+            <column name="birthCountry" length="50">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="residentState" type="string">
+            <column name="residentState" length="50">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="residentCountry" type="string">
+            <column name="residentCountry" length="50">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="50">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="birthDate" type="string">
+            <column name="birthDate" length="20">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="signupDate" type="timestamp"  generated="insert" insert="false" update="false">
+            <column name="signupDate" length="19">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="userType" type="java.lang.Integer">
+            <column name="userType">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="userStatus" type="java.lang.Integer">
+            <column name="userStatus">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="hintQuestion" type="java.lang.Integer">
+            <column name="hintQuestion">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="hintAnswer" type="string">
+            <column name="hintAnswer" length="200">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="optOut" type="java.lang.Integer">
+            <column name="optOut">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="universalOptOut" type="java.lang.Boolean">
+            <column name="universalOptOut">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="site" type="string">
+            <column name="site" length="200">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="interestedProduct" type="string">
+            <column name="interestedProduct" length="50">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="signupIPAddress" type="string">
+            <column name="signupIPAddress" length="20">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="language" type="string">
+            <column name="language" length="10">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="profileComplete" type="java.lang.Boolean">
+            <column name="profile_complete" length="2">
+                <comment></comment>
+            </column>
+        </property>
+        <property name="isGuestUser" type="java.lang.Boolean">
+            <column name="guest_user" length="2" default="0">
+                <comment></comment>
+            </column>
+        </property>
+    </class>
+    <query
+      name="com.formsdirectinc.dao.CustomerSignup.findByEmailPasswordSite"><![CDATA[
+      from CustomerSignup as signup where signup.emailId = :emailId 
+      and signup.password = :password and signup.site = :site]]>
+      <query-param name="emailId" type="java.lang.String"/>
+      <query-param name="password" type="java.lang.String"/>
+      <query-param name="site" type="java.lang.String"/>
+    </query>
+  <query
+      name="com.formsdirectinc.dao.CustomerSignup.findByName"><![CDATA[
+      from CustomerSignup as signup where signup.firstName = :firstName or
+      signup.middleName = :middleName or signup.lastName = :lastName
+      order by signup.signupDate desc]]>
+      <query-param name="firstName" type="java.lang.String"/>
+      <query-param name="middleName" type="java.lang.String"/>
+      <query-param name="lastName" type="java.lang.String"/>
+    </query>
+   <query
+      name="com.formsdirectinc.dao.CustomerSignup.findByNameAndDate"><![CDATA[
+      from CustomerSignup as signup where (signup.firstName = :firstName 
+      or signup.middleName = :middleName or  signup.lastName = :lastName )
+      and signup.signupDate between :fromDate and :toDate
+      order by signup.signupDate desc]]>
+      <query-param name="firstName" type="java.lang.String"/>
+      <query-param name="middleName" type="java.lang.String"/>
+      <query-param name="lastName" type="java.lang.String"/>
+      <query-param name="fromDate" type="java.lang.String"/>
+      <query-param name="toDate" type="java.lang.String"/>
+    </query>
+    <query
+      name="com.formsdirectinc.dao.CustomerSignup.findByPhone"><![CDATA[
+      from CustomerSignup as signup where signup.telephone = :telephone 
+      order by signup.signupDate desc]]>
+      <query-param name="telephone" type="java.lang.String"/>
+    </query>
+   <query
+      name="com.formsdirectinc.dao.CustomerSignup.findByPhoneAndDate"><![CDATA[
+      from CustomerSignup as signup where signup.telephone = :telephone
+      and signup.signupDate between :fromDate and :toDate 
+      order by signup.signupDate desc]]>
+      <query-param name="telephone" type="java.lang.String"/>
+      <query-param name="fromDate" type="java.lang.String"/>
+      <query-param name="toDate" type="java.lang.String"/>
+    </query>
+    <query
+      name="com.formsdirectinc.dao.CustomerSignup.findByEmail"><![CDATA[
+      from CustomerSignup as signup where signup.emailId = :emailId
+      order by signup.signupDate desc ]]>
+      <query-param name="emailId" type="java.lang.String"/>
+    </query>
+    <query
+            name="com.formsdirectinc.dao.CustomerSignup.findByAuthId"><![CDATA[
+      from CustomerSignup as signup where signup.authId = :authId
+      order by signup.signupDate desc ]]>
+        <query-param name="authId" type="java.lang.String"/>
+    </query>
+    <query
+      name="com.formsdirectinc.dao.CustomerSignup.findByEmailAndDate"><![CDATA[
+      from CustomerSignup as signup where signup.emailId = :emailId
+      and signup.signupDate between :fromDate and :toDate 
+      order by signup.signupDate desc ]]>
+      <query-param name="emailId" type="java.lang.String"/>
+      <query-param name="fromDate" type="java.lang.String"/>
+      <query-param name="toDate" type="java.lang.String"/>
+    </query>
+    <query
+      name="com.formsdirectinc.dao.CustomerSignup.findBySignupdate"><![CDATA[
+      from CustomerSignup as signup where signup.signupDate between :signupDateStart and :signupDateEnd 
+      order by signup.signupDate desc ]]>
+      <query-param name="signupDateStart" type="java.lang.String"/>
+      <query-param name="signupDateEnd"  type="java.lang.String"/>
+    </query>
+    <query
+      name="com.formsdirectinc.dao.CustomerSignup.findBySignupdateAndDate"><![CDATA[
+      from CustomerSignup as signup where signup.signupDate between :signupDateStart  and :signupDateEnd
+      and  signup.signupDate between :fromDate and :toDate 
+      order by signup.signupDate desc ]]>
+      <query-param name="signupDateStart" type="java.lang.String"/>
+      <query-param name="signupDateEnd"  type="java.lang.String"/>
+      <query-param name="fromDate" type="java.lang.String"/>
+      <query-param name="toDate" type="java.lang.String"/>
+    </query>
+
+
+   <query
+      name="com.formsdirectinc.dao.CustomerPaymentInfo.getSearchByOrderId"><![CDATA[
+      select cust.firstName, cust.middleName, cust.lastName, cust.emailId, cust.signupDate, 
+      cust.telephone, cust.birthCountry, pay.paymentMode, pay.status, pay.timeStamp from CustomerSignup cust , 
+      Payment pay where cust.id=pay.customerId and  pay.customerId = :eorderId order by cust.signupDate desc ]]>
+      <query-param name="eorderId" type="java.lang.String"/>
+   </query>
+
+   <query
+      name="com.formsdirectinc.dao.CustomerPaymentInfo.getSearchByOrderIdAndDate"><![CDATA[
+      select cust.firstName, cust.middleName, cust.lastName, cust.emailId, cust.signupDate, 
+      cust.telephone, cust.birthCountry, pay.paymentMode, pay.status, pay.timeStamp from CustomerSignup cust , 
+      Payment pay where cust.id=pay.customerId and  pay.customerId = :eorderId  
+      and cust.signupDate between :fromDate  and :toDate order by cust.signupDate desc]]>
+      <query-param name="eorderId" type="java.lang.String"/>
+      <query-param name="fromDate" type="java.lang.String"/>
+      <query-param name="toDate" type="java.lang.String"/>
+   </query>
+
+   <query
+      name="com.formsdirectinc.dao.CustomerPaymentInfo.getSearchByPromoCode"><![CDATA[
+      select cust.firstName, cust.middleName, cust.lastName, cust.emailId, cust.signupDate, 
+      cust.telephone, cust.birthCountry, pay.paymentMode, pay.status, pay.timeStamp from CustomerSignup cust , 
+      Payment pay where cust.id=pay.customerId and  pay.promoCode = :promoCode order by cust.signupDate desc ]]>
+      <query-param name="promoCode" type="java.lang.String"/>
+   </query>
+   <query
+      name="com.formsdirectinc.dao.CustomerPaymentInfo.getSearchByPromoCodeAndDate"><![CDATA[
+      select cust.firstName, cust.middleName, cust.lastName, cust.emailId, cust.signupDate, 
+      cust.telephone, cust.birthCountry, pay.paymentMode, pay.status, pay.timeStamp from CustomerSignup cust , 
+      Payment pay where cust.id=pay.customerId and  pay.promoCode = :promoCode  
+      and cust.signupDate between :fromDate  and :toDate order by cust.signupDate desc]]>
+      <query-param name="promoCode" type="java.lang.String"/>
+      <query-param name="fromDate" type="java.lang.String"/>
+      <query-param name="toDate" type="java.lang.String"/>
+    </query>
+
+ <query
+      name="com.formsdirectinc.dao.CustomerPaymentInfo.getSearchByTransactionId"><![CDATA[
+      select cust.firstName, cust.middleName, cust.lastName, cust.emailId, cust.signupDate, 
+      cust.telephone, cust.birthCountry, pay.paymentMode, pay.status, pay.timeStamp from CustomerSignup cust , 
+      Payment pay where cust.id=pay.customerId and  pay.refNumber = :transactionId  order by cust.signupDate desc ]]>
+      <query-param name="transactionId" type="java.lang.String"/>
+   </query>
+   <query
+      name="com.formsdirectinc.dao.CustomerPaymentInfo.getSearchByTransactionIdAndDate"><![CDATA[
+      select cust.firstName, cust.middleName, cust.lastName, cust.emailId, cust.signupDate, 
+      cust.telephone, cust.birthCountry, pay.paymentMode, pay.status, pay.timeStamp from CustomerSignup cust , 
+      Payment pay where cust.id=pay.customerId and pay.refNumber = :transactionId  
+      and cust.signupDate between :fromDate  and :toDate order by cust.signupDate desc]]>
+      <query-param name="transactionId" type="java.lang.String"/>
+      <query-param name="fromDate" type="java.lang.String"/>
+      <query-param name="toDate" type="java.lang.String"/>
+    </query>
+
+   <query
+      name="com.formsdirectinc.dao.CustomerPaymentInfo.getSearchByApplicationId"><![CDATA[
+      select cust.firstName, cust.middleName, cust.lastName, cust.emailId, cust.signupDate, 
+      cust.telephone, cust.birthCountry, pay.paymentMode, pay.status, pay.timeStamp from CustomerSignup cust , 
+      Payment pay where cust.id=pay.customerId and  pay.applicationId = :applicationId  order by cust.signupDate desc ]]>
+      <query-param name="applicationId" type="java.lang.String"/>
+   </query>
+   <query
+      name="com.formsdirectinc.dao.CustomerPaymentInfo.getSearchByApplicationIdAndDate"><![CDATA[
+      select cust.firstName, cust.middleName, cust.lastName, cust.emailId, cust.signupDate, 
+      cust.telephone, cust.birthCountry, pay.paymentMode, pay.status, pay.timeStamp from CustomerSignup cust , 
+      Payment pay where cust.id=pay.customerId and pay.applicationId = :applicationId  
+      and cust.signupDate between :fromDate  and :toDate order by cust.signupDate desc]]>
+      <query-param name="applicationId" type="java.lang.String"/>
+      <query-param name="fromDate" type="java.lang.String"/>
+      <query-param name="toDate" type="java.lang.String"/>
+    </query>
+
+  <query
+      name="com.formsdirectinc.dao.CustomerPaymentInfo.getSearchByPaymentDate"><![CDATA[
+      select cust.firstName, cust.middleName, cust.lastName, cust.emailId, cust.signupDate, 
+      cust.telephone, cust.birthCountry, pay.paymentMode, pay.status, pay.timeStamp from CustomerSignup cust , 
+      Payment pay where cust.id=pay.customerId and pay.timeStamp between :startDateTime and :endDateTime order
+      by  cust.signupDate desc]]>
+      <query-param name="startPayDateTime" type="java.lang.String"/>
+      <query-param name="endPayDateTime" type="java.lang.String"/>
+    </query>
+
+  <query  name="com.formsdirectinc.dao.CustomerSignup.findByUserId"><![CDATA[
+      from CustomerSignup as signup where signup.id = :userId
+      order by signup.signupDate desc]]>
+      <query-param name="userId" type="java.lang.String"/>
+  </query>
+
+  <query name="com.formsdirectinc.dao.CustomerSignup.findByUserIdAndDate"><![CDATA[
+      from CustomerSignup as signup where signup.id = :userId
+      and signup.signupDate between :fromDate and :toDate
+      order by signup.signupDate desc]]>
+    <query-param name="userId" type="java.lang.String"/>
+    <query-param name="fromDate" type="java.lang.String"/>
+    <query-param name="toDate" type="java.lang.String"/>
+   </query>
+
+</hibernate-mapping>

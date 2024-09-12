@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 17 Dec, 2015 11:50:38 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+	<class name="com.formsdirectinc.dao.UserVisitSource"
+		table="user_visit_source_t">
+		<id name="id" type="java.lang.Long">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+		<property name="userId" type="java.lang.Long">
+			<column name="user_id" not-null="true" />
+		</property>
+		<property name="propertyKey" type="string">
+			<column name="property_key" not-null="true" />
+		</property>
+		<property name="propertyValue" type="string">
+			<column name="property_value" />
+		</property>
+		<property name="createdOn" type="timestamp" insert="false" update="false">
+			<column length="19" name="created_on" not-null="true"/>
+		</property>
+	</class>
+</hibernate-mapping>

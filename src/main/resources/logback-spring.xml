@@ -1,0 +1,60 @@
+<configuration scan="true" scanPeriod="5 minutes">
+    <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>log/registration.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Daily rollover -->
+            <fileNamePattern>log/registration.log.%d{yyyyMMdd}</fileNamePattern>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%date %X{req.remoteHost} %X{sessionID} %X{userIDCookie} %X{userEmailID} %X{req.requestURI} %level
+                %logger{10} %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="fileAppender"/>
+    </root>
+
+    <springProperty name="SENTRY_DSN" source="logging.sentry.dsn"/>
+    <springProperty name="CONTEXT_PATH" source="server.servlet.context-path"/>
+
+    <appender name="Sentry" class="com.getsentry.raven.logback.SentryAppender">
+        <dsn>${SENTRY_DSN}</dsn>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <tags>webapp_name:${CONTEXT_PATH}</tags>
+    </appender>
+
+    <springProfile name="prod">
+        <logger name="org.springframework.web" level="debug"/>
+        <!-- Don't change the log level without prior approval, changing the log level will
+        leak all the Personally identifiable information (PII) in to the logs-->
+        <logger name="org.springframework.web.servlet.mvc" level="info"/>
+        <logger name="org.hibernate.SQL" level="DEBUG" />
+        <logger name="org.hibernate" level="DEBUG" />
+        <root level="INFO">
+            <appender-ref ref="Sentry"/>
+        </root>
+    </springProfile>
+    <springProfile name="dev">
+        <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <charset>UTF-8</charset>
+                <Pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</Pattern>
+            </encoder>
+        </appender>
+
+        <root level="INFO">
+            <appender-ref ref="consoleAppender"/>
+        </root>
+        <logger name="org.springframework.web" level="debug"/>
+        <logger name="org.hibernate.SQL" level="DEBUG" />
+        <logger name="org.hibernate" level="DEBUG" />
+    </springProfile>
+
+
+</configuration>
